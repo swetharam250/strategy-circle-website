@@ -1,0 +1,159 @@
+---
+// -----------------------------------------------------------------------------
+// Hero.astro
+// Navy split-panel hero. Left: eyebrow, headline, body, two CTAs.
+// Right: the concentric-ring "Circle" signature motif (pure SVG/CSS) with a
+// subtle grid backdrop. The motif is decorative and hidden from AT.
+// -----------------------------------------------------------------------------
+import { hero } from '../data/hero';
+import SectionEyebrow from './SectionEyebrow.astro';
+import Button from './Button.astro';
+---
+
+<section class="hero grid-bg" id="top">
+  <div class="container hero__inner">
+    <div class="hero__content" data-reveal>
+      <SectionEyebrow tone="dark">{hero.eyebrow}</SectionEyebrow>
+      <h1 class="hero__headline">{hero.headline}</h1>
+      <p class="hero__body">{hero.body}</p>
+      <div class="hero__actions">
+        <Button href={hero.primaryCta.href} variant="accent" size="lg" withArrow>
+          {hero.primaryCta.label}
+        </Button>
+        <Button href={hero.secondaryCta.href} variant="ghost-light" size="lg">
+          {hero.secondaryCta.label}
+        </Button>
+      </div>
+    </div>
+
+    <div class="hero__visual" aria-hidden="true" data-reveal style="--reveal-delay: 120ms">
+      <svg class="rings" viewBox="0 0 420 420" role="presentation">
+        <defs>
+          <radialGradient id="ringGlow" cx="50%" cy="50%" r="55%">
+            <stop offset="0%" stop-color="rgba(254,198,79,0.18)" />
+            <stop offset="100%" stop-color="rgba(254,198,79,0)" />
+          </radialGradient>
+        </defs>
+        <circle cx="210" cy="210" r="200" fill="url(#ringGlow)" />
+        <circle class="ring ring--outer" cx="210" cy="210" r="186" />
+        <circle class="ring" cx="210" cy="210" r="142" />
+        <circle class="ring" cx="210" cy="210" r="98" />
+        <circle class="ring ring--accent" cx="210" cy="210" r="54" />
+        <!-- orbiting nodes -->
+        <circle class="node node--gold" cx="210" cy="24" r="6" />
+        <circle class="node node--orange" cx="352" cy="210" r="5" />
+        <circle class="node node--faint" cx="210" cy="312" r="4" />
+        <!-- crosshair guides -->
+        <line class="guide" x1="210" y1="8" x2="210" y2="412" />
+        <line class="guide" x1="8" y1="210" x2="412" y2="210" />
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background-color: var(--color-primary);
+    color: var(--text-on-dark);
+    position: relative;
+    overflow: hidden;
+  }
+  /* warm depth from the dark-blue family at the bottom edge */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, transparent 55%, rgba(16, 24, 32, 0.55) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding-block: clamp(3.5rem, 2rem + 6vw, 7rem);
+  }
+
+  .hero__headline {
+    color: var(--color-white);
+    max-width: 16ch;
+    margin-bottom: var(--space-lg);
+  }
+  .hero__body {
+    color: var(--text-on-dark-muted);
+    font-size: var(--fs-body-lg);
+    max-width: 52ch;
+    margin-bottom: var(--space-xl);
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  /* Signature ring motif */
+  .hero__visual {
+    justify-self: center;
+    width: 100%;
+    max-width: 440px;
+  }
+  .rings {
+    width: 100%;
+    height: auto;
+  }
+  .ring {
+    fill: none;
+    stroke: var(--white-tint-12);
+    stroke-width: 1.5;
+  }
+  .ring--outer {
+    stroke: var(--white-tint-08);
+  }
+  .ring--accent {
+    stroke: var(--color-secondary);
+    stroke-width: 2;
+    stroke-dasharray: 3 7;
+  }
+  .guide {
+    stroke: var(--white-tint-08);
+    stroke-width: 1;
+  }
+  .node--gold { fill: var(--color-gold); }
+  .node--orange { fill: var(--color-secondary); }
+  .node--faint { fill: var(--white-tint-60); }
+
+  /* Gentle, reduced-motion-aware rotation of the dashed accent ring + node */
+  @media (prefers-reduced-motion: no-preference) {
+    .ring--accent {
+      transform-origin: 210px 210px;
+      animation: spin 38s linear infinite;
+    }
+    .node--gold {
+      transform-origin: 210px 210px;
+      animation: spin 24s linear infinite;
+    }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @media (max-width: 880px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+    .hero__visual {
+      grid-row: 1;
+      max-width: 280px;
+      margin-bottom: var(--space-md);
+      opacity: 0.9;
+    }
+    .hero__headline {
+      max-width: none;
+    }
+  }
+</style>

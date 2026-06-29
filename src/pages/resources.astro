@@ -1,0 +1,195 @@
+---
+// -----------------------------------------------------------------------------
+// resources.astro — /resources
+// Future-ready resources index. Phase 1 shows a heading, intro, filter chips,
+// and clearly-labelled placeholder cards. Filtering is handled by a tiny
+// vanilla-JS toggle over the data-type attribute (no framework, no hydration).
+// -----------------------------------------------------------------------------
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionEyebrow from '../components/SectionEyebrow.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+import Button from '../components/Button.astro';
+import {
+  resourcesPage,
+  resourceFilters,
+  resources,
+} from '../data/resources';
+import { calendlyUrl } from '../data/site';
+
+const pageTitle = 'Resources | Strategy Circle';
+const pageDescription = resourcesPage.description;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} path="/resources">
+  <!-- Page header -->
+  <section class="resources-hero grid-bg">
+    <div class="container resources-hero__inner" data-reveal>
+      <SectionEyebrow tone="dark">Insights &amp; Perspectives</SectionEyebrow>
+      <h1 class="resources-hero__title">{resourcesPage.heading}</h1>
+      <p class="resources-hero__desc">{resourcesPage.description}</p>
+    </div>
+  </section>
+
+  <!-- Filters + grid -->
+  <section class="resources section">
+    <div class="container">
+      <div class="filters" role="group" aria-label="Filter resources by type">
+        {resourceFilters.map((f, i) => (
+          <button
+            class={`filter${i === 0 ? ' is-active' : ''}`}
+            data-filter={f.value}
+            type="button"
+            aria-pressed={i === 0 ? 'true' : 'false'}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      <ul class="resources__grid" id="resources-grid">
+        {resources.map((resource) => (
+          <li class="resources__item" data-type={resource.type}>
+            <ResourceCard resource={resource} />
+          </li>
+        ))}
+      </ul>
+
+      <p class="resources__empty" id="resources-empty" hidden>
+        No resources in this category yet — check back soon.
+      </p>
+
+      <!-- Closing note -->
+      <div class="resources__note" data-reveal>
+        <p>
+          New blogs, newsletters, insights, and LinkedIn articles will be published here.
+          Want to talk in the meantime?
+        </p>
+        <Button href={calendlyUrl} variant="primary" size="lg" withArrow>
+          Book a Consultation
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
+  const items = document.querySelectorAll<HTMLLIElement>('.resources__item');
+  const empty = document.getElementById('resources-empty');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const value = btn.dataset.filter ?? 'all';
+
+      buttons.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', String(active));
+      });
+
+      let visible = 0;
+      items.forEach((item) => {
+        const show = value === 'all' || item.dataset.type === value;
+        item.hidden = !show;
+        if (show) visible++;
+      });
+
+      if (empty) empty.hidden = visible !== 0;
+    });
+  });
+</script>
+
+<style>
+  .resources-hero {
+    background-color: var(--color-primary);
+    color: var(--text-on-dark);
+    padding-block: clamp(3rem, 2rem + 5vw, 5.5rem);
+  }
+  .resources-hero__inner {
+    max-width: 60ch;
+  }
+  .resources-hero__title {
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+  }
+  .resources-hero__desc {
+    color: var(--text-on-dark-muted);
+    font-size: var(--fs-body-lg);
+  }
+
+  .resources {
+    background-color: var(--surface-muted);
+  }
+
+  /* Filter chips */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-2xl);
+  }
+  .filter {
+    font-size: var(--fs-small);
+    font-weight: 500;
+    color: var(--text-body);
+    background-color: var(--color-white);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    padding: 0.55rem 1.1rem;
+    transition: all var(--dur) var(--ease-out);
+  }
+  .filter:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+  .filter.is-active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .resources__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+  .resources__item {
+    display: flex;
+  }
+  .resources__item > :global(.resource-card) {
+    width: 100%;
+  }
+
+  .resources__empty {
+    margin-top: var(--space-xl);
+    color: var(--text-muted);
+  }
+
+  .resources__note {
+    margin-top: var(--space-3xl);
+    padding: var(--space-2xl);
+    background-color: var(--color-white);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+  }
+  .resources__note p {
+    max-width: 46ch;
+    color: var(--text-body);
+  }
+
+  @media (max-width: 900px) {
+    .resources__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .resources__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

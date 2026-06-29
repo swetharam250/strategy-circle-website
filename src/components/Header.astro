@@ -1,0 +1,230 @@
+---
+import logo from '../assets/images/strategy-circle-logo.svg';
+// -----------------------------------------------------------------------------
+// Header.astro
+// Sticky site header: text logo, anchored nav, and a primary "Book
+// Consultation" CTA. Includes an accessible mobile menu (minimal vanilla JS).
+// -----------------------------------------------------------------------------
+import { navLinks, calendlyUrl, site } from '../data/site';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+---
+
+<header class="site-header" id="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href={`${import.meta.env.BASE_URL}#top`} aria-label={`${site.name} — home`}>
+      <img class="brand__logo" src={logo.src} alt={site.name} width="180" height="48" />
+    </a>
+
+    <nav class="nav nav--desktop" aria-label="Primary">
+      <ul class="nav__list">
+        {navLinks.map((link) => (
+          <li><a class="nav__link" href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="site-header__cta">
+      <Button href={calendlyUrl} variant="accent" size="md">Book Consultation</Button>
+    </div>
+
+    <button
+      class="nav-toggle"
+      id="nav-toggle"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+    >
+      <Icon name="menu" size={24} class="nav-toggle__open" />
+      <Icon name="close" size={24} class="nav-toggle__close" />
+    </button>
+  </div>
+
+  <!-- Mobile navigation panel -->
+  <nav class="nav nav--mobile" id="mobile-nav" aria-label="Mobile" hidden>
+    <ul class="nav__list">
+      {navLinks.map((link) => (
+        <li><a class="nav__link" href={link.href} data-mobile-link>{link.label}</a></li>
+      ))}
+    </ul>
+    <Button href={calendlyUrl} variant="accent" size="lg" class="nav--mobile__cta">
+      Book Consultation
+    </Button>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const panel = document.getElementById('mobile-nav');
+  const header = document.getElementById('site-header');
+
+  function setOpen(open: boolean) {
+    if (!toggle || !panel || !header) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    header.classList.toggle('is-open', open);
+    if (open) {
+      panel.hidden = false;
+    } else {
+      panel.hidden = true;
+    }
+  }
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    setOpen(!open);
+  });
+
+  // Close the panel after tapping a link.
+  panel?.querySelectorAll('[data-mobile-link]').forEach((el) =>
+    el.addEventListener('click', () => setOpen(false))
+  );
+
+  // Close on Escape.
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  // Add a shadow / solid background once scrolled.
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-white);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+  }
+  .site-header.is-scrolled {
+    border-bottom-color: var(--border-subtle);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    min-height: 72px;
+  }
+
+  /* Brand */
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    color: var(--color-primary);
+  }
+  .brand__mark {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--color-primary);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .brand__mark::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    border: 2px solid var(--color-secondary);
+  }
+
+  /* Desktop nav */
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+  .nav--desktop {
+    margin-inline: auto;
+  }
+  .nav__link {
+    position: relative;
+    font-size: var(--fs-small);
+    font-weight: 500;
+    color: var(--text-body);
+    padding: 0.25rem 0;
+    transition: color var(--dur) var(--ease-out);
+  }
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-secondary);
+    transition: width var(--dur) var(--ease-out);
+  }
+  .nav__link:hover,
+  .nav__link:focus-visible {
+    color: var(--color-primary);
+  }
+  .nav__link:hover::after,
+  .nav__link:focus-visible::after {
+    width: 100%;
+  }
+
+  /* Mobile toggle */
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.4rem;
+    color: var(--color-primary);
+    line-height: 0;
+  }
+  .nav-toggle__close { display: none; }
+  .site-header.is-open .nav-toggle__open { display: none; }
+  .site-header.is-open .nav-toggle__close { display: block; }
+
+  /* Mobile panel */
+  .nav--mobile {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--container-pad) var(--space-xl);
+    border-top: 1px solid var(--border-subtle);
+    background-color: var(--color-white);
+  }
+  .nav--mobile .nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .nav--mobile .nav__link {
+    padding: 0.85rem 0;
+    font-size: var(--fs-body);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .nav--mobile__cta {
+    margin-top: var(--space-sm);
+    align-self: stretch;
+  }
+
+  /* Breakpoint: collapse to mobile menu */
+  @media (max-width: 880px) {
+    .nav--desktop,
+    .site-header__cta {
+      display: none;
+    }
+    .nav-toggle {
+      display: inline-flex;
+    }
+    .site-header.is-open .nav--mobile {
+      display: flex;
+    }
+  }
+</style>

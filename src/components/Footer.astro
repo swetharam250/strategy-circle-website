@@ -1,0 +1,199 @@
+---
+// -----------------------------------------------------------------------------
+// Footer.astro
+// Near-black footer: brand brief, quick links, services, and contact anchors.
+// -----------------------------------------------------------------------------
+import {
+  site,
+  footerQuickLinks,
+  footerServiceLinks,
+  legalLinks,
+  legalText,
+} from '../data/site';
+import logo from '../assets/images/strategy-circle-logo-footer.svg';
+import Icon from './Icon.astro';
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a class="footer__logo" href={`${import.meta.env.BASE_URL}#top`} aria-label={`${site.name} — home`}>
+        <img class="footer__logo-img" src={logo.src} alt={site.name} width="190" height="52" />
+      </a>
+      <p class="footer__brief">{site.tagline}</p>
+    </div>
+
+    <nav class="footer__col" aria-label="Quick links">
+      <h2 class="footer__heading">Quick Links</h2>
+      <ul>
+        {footerQuickLinks.map((link) => (
+          <li><a class="footer__link" href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav class="footer__col" aria-label="Services">
+      <h2 class="footer__heading">Services</h2>
+      <ul>
+        {footerServiceLinks.map((link) => (
+          <li><a class="footer__link" href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="footer__col">
+      <h2 class="footer__heading">Contact</h2>
+      <ul class="footer__contact">
+        <li>
+          <Icon name="mail" size={18} class="footer__icon" />
+          <a class="footer__link" href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+        </li>
+        <li>
+          <Icon name="phone" size={18} class="footer__icon" />
+          <a class="footer__link" href={site.contact.phoneHref}>{site.contact.phone}</a>
+        </li>
+        <li>
+          <Icon name="map-pin" size={18} class="footer__icon" />
+          <span>{site.contact.location}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__legal">
+    <div class="container footer__legal-inner">
+      <p>{legalText}</p>
+      <nav class="footer__legal-links" aria-label="Legal links">
+        {legalLinks.map((link) => (
+          <a href={link.href.startsWith('/') ? `${import.meta.env.BASE_URL}/${link.href.slice(1)}` : link.href}>
+            {link.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-dark);
+    color: var(--text-on-dark-muted);
+    font-size: var(--fs-small);
+  }
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+    gap: var(--space-2xl);
+    padding-block: var(--space-3xl) var(--space-2xl);
+  }
+
+  .footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+  }
+  .footer__mark {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--color-white);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .footer__mark::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    border: 2px solid var(--color-secondary);
+  }
+  .footer__brief {
+    max-width: 34ch;
+    line-height: 1.55;
+  }
+
+  .footer__heading {
+    font-family: var(--font-body);
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-md);
+  }
+  .footer__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .footer__link {
+    color: var(--text-on-dark-muted);
+    transition: color var(--dur) var(--ease-out);
+  }
+  .footer__link:hover,
+  .footer__link:focus-visible {
+    color: var(--color-white);
+  }
+
+  .footer__contact li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .footer__icon {
+    color: var(--color-secondary);
+    flex-shrink: 0;
+  }
+
+  .footer__legal {
+    border-top: 1px solid var(--white-tint-08);
+    padding-block: var(--space-lg);
+    font-size: 0.8rem;
+    color: var(--white-tint-60);
+  }
+  .footer__legal-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+  .footer__legal-inner p {
+    margin: 0;
+  }
+  .footer__legal-links {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+  .footer__legal-links a {
+    color: var(--white-tint-60);
+    text-decoration: none;
+    transition: color var(--dur) var(--ease-out);
+  }
+  .footer__legal-links a:hover,
+  .footer__legal-links a:focus-visible {
+    color: var(--color-secondary);
+  }
+
+  @media (max-width: 880px) {
+    .footer__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 520px) {
+    .footer__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

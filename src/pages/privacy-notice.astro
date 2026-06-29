@@ -1,0 +1,311 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Privacy Notice | Strategy Circle';
+const description =
+  'Strategy Circle privacy notice explaining how personal information is collected, used, protected, and handled in line with applicable privacy requirements.';
+---
+
+<BaseLayout title={title} description={description}>
+  <main class="privacy-page">
+    <section class="privacy-hero">
+      <div class="container">
+        <p class="eyebrow">DATA PRIVACY & YOUR PERSONAL INFORMATION</p>
+        <h1>Privacy Notice</h1>
+        <p class="privacy-hero__intro">
+          Strategy Circle provides financial and risk advisory services to startups, corporates, and investors. We take your privacy seriously.
+        </p>
+        <p class="privacy-hero__meta">Last updated: June 2026</p>
+      </div>
+    </section>
+
+    <section class="privacy-content">
+      <div class="container privacy-content__grid">
+        <aside class="privacy-nav" aria-label="Privacy notice sections">
+          <p>On this page</p>
+          <a href="#who-we-are">Who we are</a>
+          <a href="#data-we-collect">What personal data we collect</a>
+          <a href="#how-we-use-data">How we use your data</a>
+          <a href="#privacy-rights">Your privacy rights</a>
+          <a href="#sharing-data">Who we share your data with</a>
+          <a href="#retention">How long we keep your data</a>
+          <a href="#security">Data security</a>
+          <a href="#contact">Your rights & contact us</a>
+          <a href="#compliance">Compliance</a>
+          <a href="#changes">Changes to this notice</a>
+        </aside>
+
+        <article class="privacy-card">
+          <section id="who-we-are">
+            <h2>Who We Are</h2>
+            <p>
+              Strategy Circle provides financial and risk advisory services to startups, corporates, and investors. We take your privacy seriously.
+            </p>
+          </section>
+
+          <section id="data-we-collect">
+            <h2>What Personal Data We Collect</h2>
+            <p>When you contact us or engage with our services, we may collect:</p>
+            <ul>
+              <li>Your name, email, phone number, and job title</li>
+              <li>Company name and business contact details</li>
+              <li>Communication records</li>
+              <li>Website usage data, such as IP address and pages visited</li>
+            </ul>
+            <p>
+              We only collect information necessary to provide our services and communicate with you.
+            </p>
+          </section>
+
+          <section id="how-we-use-data">
+            <h2>How We Use Your Data</h2>
+            <p>We process your personal data to:</p>
+            <ul>
+              <li>Respond to your inquiries</li>
+              <li>Deliver financial and risk advisory services</li>
+              <li>Send updates or content you have opted into</li>
+              <li>Comply with legal or regulatory requirements</li>
+              <li>Improve our website and services</li>
+            </ul>
+          </section>
+
+          <section id="privacy-rights">
+            <h2>Your Privacy Rights</h2>
+            <p>You have the right to:</p>
+            <ol>
+              <li>Know what personal data we hold about you</li>
+              <li>Request corrections if your data is inaccurate</li>
+              <li>Request deletion of your data, where legally permitted</li>
+              <li>Object to how we process your data</li>
+              <li>Withdraw consent for communications at any time</li>
+              <li>File a complaint with us within 30 days</li>
+            </ol>
+          </section>
+
+          <section id="sharing-data">
+            <h2>Who We Share Your Data With</h2>
+            <p>We do not sell or share your personal data for commercial purposes.</p>
+            <p>We may share your data with:</p>
+            <ul>
+              <li>Technology service providers, such as email and website hosting providers</li>
+              <li>Legal or regulatory authorities when required by law</li>
+              <li>Professional advisors under confidentiality agreements</li>
+            </ul>
+          </section>
+
+          <section id="retention">
+            <h2>How Long We Keep Your Data</h2>
+            <p>We retain your personal data only as long as necessary:</p>
+            <ul>
+              <li>While you are engaging with us or for 1 year after</li>
+              <li>Longer if required by law or to resolve disputes</li>
+              <li>Securely deleted or anonymized once no longer needed</li>
+            </ul>
+          </section>
+
+          <section id="security">
+            <h2>Data Security</h2>
+            <p>We protect your personal data with:</p>
+            <ul>
+              <li>Access controls and confidentiality agreements</li>
+              <li>Regular security reviews</li>
+            </ul>
+          </section>
+
+          <section id="contact">
+            <h2>Your Rights & Contact Us</h2>
+            <p>To exercise your privacy rights or ask questions:</p>
+            <p>
+              Email:
+              <a href="mailto:hello@strategycircle.co.in?subject=Data%20Privacy%20Request">
+                hello@strategycircle.co.in
+              </a>
+            </p>
+            <p>Subject: “Data Privacy Request”</p>
+            <p>Include:</p>
+            <ul>
+              <li>Your name</li>
+              <li>What you are requesting, such as access, correction, or deletion</li>
+              <li>Sufficient details to verify your identity</li>
+            </ul>
+            <p>We will respond within 30 business days.</p>
+          </section>
+
+          <section id="compliance">
+            <h2>Compliance</h2>
+            <p>
+              Strategy Circle complies with the Digital Personal Data Protection (DPDP) Act, 2023.
+            </p>
+          </section>
+
+          <section id="changes">
+            <h2>Changes to This Notice</h2>
+            <p>
+              We may update this notice to reflect changes in our practices or law. Material changes will be published here and notified via email.
+            </p>
+            <p>
+              Questions? Contact us anytime at
+              <a href="mailto:hello@strategycircle.co.in">hello@strategycircle.co.in</a>.
+            </p>
+          </section>
+        </article>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .privacy-page {
+    background: var(--color-white);
+  }
+
+  .privacy-hero {
+    padding: 7rem 0 4rem;
+    background:
+      linear-gradient(135deg, rgba(28, 51, 98, 0.95), rgba(16, 24, 32, 0.98)),
+      linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: auto, 32px 32px, 32px 32px;
+    color: var(--color-white);
+  }
+
+  .privacy-hero h1 {
+    max-width: 780px;
+    margin: 0;
+    color: var(--color-white);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+    color: var(--color-secondary);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .privacy-hero__intro {
+    max-width: 760px;
+    margin: 1.5rem 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    line-height: 1.7;
+  }
+
+  .privacy-hero__meta {
+    display: inline-flex;
+    margin: 1.5rem 0 0;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.85rem;
+  }
+
+  .privacy-content {
+    padding: 5rem 0;
+    background: linear-gradient(180deg, rgba(218, 217, 214, 0.28), rgba(255, 255, 255, 1));
+  }
+
+  .privacy-content__grid {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .privacy-nav {
+    position: sticky;
+    top: 6rem;
+    display: grid;
+    gap: 0.55rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(28, 51, 98, 0.12);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .privacy-nav p {
+    margin: 0 0 0.5rem;
+    color: var(--color-primary);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .privacy-nav a {
+    color: rgba(16, 24, 32, 0.72);
+    font-size: 0.92rem;
+    line-height: 1.35;
+    text-decoration: none;
+  }
+
+  .privacy-nav a:hover,
+  .privacy-nav a:focus-visible {
+    color: var(--color-secondary);
+  }
+
+  .privacy-card {
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid rgba(28, 51, 98, 0.12);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    box-shadow: var(--shadow-md);
+  }
+
+  .privacy-card section + section {
+    margin-top: 2.75rem;
+    padding-top: 2.75rem;
+    border-top: 1px solid rgba(28, 51, 98, 0.1);
+  }
+
+  .privacy-card h2 {
+    margin: 0 0 1rem;
+    color: var(--color-primary);
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+    letter-spacing: -0.03em;
+  }
+
+  .privacy-card p,
+  .privacy-card li {
+    color: rgba(16, 24, 32, 0.76);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .privacy-card p {
+    margin: 0 0 1rem;
+  }
+
+  .privacy-card ul,
+  .privacy-card ol {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  .privacy-card a {
+    color: var(--color-secondary);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .privacy-card a:hover,
+  .privacy-card a:focus-visible {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .privacy-content__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .privacy-nav {
+      position: static;
+    }
+  }
+</style>

@@ -1,0 +1,191 @@
+---
+// -----------------------------------------------------------------------------
+// AdvisorSection.astro
+// "Meet Your Advisor" — founder profile. The portrait is a graceful CSS/SVG
+// placeholder (monogram + credential chips) so the build never depends on an
+// image file existing. To use a real photo, see the comment in the markup.
+// -----------------------------------------------------------------------------
+import { Image } from 'astro:assets';
+import portrait from '../assets/images/swetha-ranganathan.png';
+import { advisor } from '../data/advisor';
+import SectionEyebrow from './SectionEyebrow.astro';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="advisor section" id="advisor">
+  <div class="container advisor__inner">
+    <figure class="portrait" data-reveal>
+      <div class="portrait__frame">
+        <Image
+          src={portrait}
+          alt={advisor.portraitAlt}
+          class="portrait__img"
+          widths={[360, 560, 720]}
+          sizes="(max-width: 880px) 80vw, 420px"
+          loading="lazy"
+        />
+        <div class="portrait__chips" aria-hidden="true">
+          {advisor.credentials.map((c) => <span class="chip">{c}</span>)}
+        </div>
+      </div>
+      <span class="portrait__accent" aria-hidden="true"></span>
+    </figure>
+
+    <div class="advisor__content" data-reveal style="--reveal-delay: 100ms">
+      <SectionEyebrow>Meet Your Advisor</SectionEyebrow>
+      <h2 class="advisor__heading">{advisor.heading}</h2>
+      <p class="advisor__intro">{advisor.intro}</p>
+      <p class="advisor__body">{advisor.body}</p>
+      <p class="advisor__body">{advisor.sectors}</p>
+      <div class="advisor__cta">
+        <Button href={advisor.cta.href} variant="primary" size="lg" newTab>
+          <Icon name="linkedin" size={18} />
+          <span>{advisor.cta.label}</span>
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .advisor {
+    background-color: var(--surface-muted);
+  }
+  .advisor__inner {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+
+  /* ---- Portrait placeholder ---- */
+  .portrait {
+    position: relative;
+    margin: 0;
+    max-width: 420px;
+    width: 100%;
+  }
+  .portrait__frame {
+    position: relative;
+    z-index: 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--color-primary);
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 4 / 4.6;
+  }
+  .portrait__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 32%;
+  }
+  .portrait__placeholder {
+    aspect-ratio: 4 / 5;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    gap: var(--space-sm);
+    color: var(--white-tint-70);
+    background:
+      radial-gradient(circle at 30% 20%, rgba(254, 198, 79, 0.12), transparent 55%),
+      linear-gradient(160deg, var(--color-primary), var(--color-dark) 120%);
+    position: relative;
+  }
+  /* faint concentric rings echo the brand mark behind the monogram */
+  .portrait__placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 42%, transparent 28%, var(--white-tint-08) 28.5%, transparent 29.5%),
+      radial-gradient(circle at 50% 42%, transparent 40%, var(--white-tint-08) 40.5%, transparent 41.5%);
+    pointer-events: none;
+  }
+  .portrait__monogram {
+    position: relative;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    letter-spacing: 0.05em;
+    color: var(--color-white);
+  }
+  .portrait__caption {
+    position: relative;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .portrait__chips {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    background: linear-gradient(to top, rgba(16, 24, 32, 0.6), transparent);
+  }
+  .chip {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-white);
+    background-color: var(--white-tint-12);
+    border: 1px solid var(--white-tint-12);
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(2px);
+  }
+
+  /* offset accent block behind the frame */
+  .portrait__accent {
+    position: absolute;
+    z-index: 0;
+    right: -14px;
+    bottom: -14px;
+    width: 60%;
+    height: 60%;
+    border: 2px solid var(--color-secondary);
+    border-radius: var(--radius-lg);
+  }
+
+  /* ---- Content ---- */
+  .advisor__heading {
+    margin-bottom: var(--space-lg);
+    max-width: 22ch;
+  }
+  .advisor__intro {
+    font-size: var(--fs-body-lg);
+    color: var(--text-strong);
+    font-weight: 500;
+    margin-bottom: var(--space-md);
+  }
+  .advisor__body {
+    margin-bottom: var(--space-md);
+    color: var(--text-body);
+  }
+  .advisor__cta {
+    margin-top: var(--space-lg);
+  }
+  /* keep the LinkedIn glyph + label aligned in the button slot */
+  .advisor__cta :global(.btn__label) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 880px) {
+    .advisor__inner {
+      grid-template-columns: 1fr;
+    }
+    .portrait {
+      max-width: 360px;
+      margin-inline: auto;
+    }
+  }
+</style>

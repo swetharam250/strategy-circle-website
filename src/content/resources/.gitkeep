@@ -1,0 +1,3 @@
+# Drop markdown/MDX resource entries here when migrating to Content Collections.
+# Frontmatter should match the schema in src/content/config.ts.
+# This file just keeps the folder tracked in git for Phase 1.

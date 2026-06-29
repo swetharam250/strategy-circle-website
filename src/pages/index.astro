@@ -1,0 +1,21 @@
+---
+// -----------------------------------------------------------------------------
+// index.astro — Homepage
+// One-page landing site assembled from section components. All copy lives in
+// the data files under src/data; this file only composes the layout.
+// -----------------------------------------------------------------------------
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import DifferenceGrid from '../components/DifferenceGrid.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import AdvisorSection from '../components/AdvisorSection.astro';
+import CTASection from '../components/CTASection.astro';
+---
+
+<BaseLayout path="/">
+  <Hero />
+  <DifferenceGrid />
+  <ServicesSection />
+  <AdvisorSection />
+  <CTASection />
+</BaseLayout>

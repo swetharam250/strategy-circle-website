@@ -1,0 +1,51 @@
+---
+// -----------------------------------------------------------------------------
+// SectionEyebrow.astro
+// Small uppercase label preceded by an orange accent line. Used above section
+// headings. `tone="dark"` adapts colours for dark-background sections.
+// -----------------------------------------------------------------------------
+export interface Props {
+  tone?: 'light' | 'dark';
+  align?: 'start' | 'center';
+  class?: string;
+}
+const { tone = 'light', align = 'start', class: className = '' } = Astro.props;
+---
+
+<p class={`eyebrow eyebrow--${tone} eyebrow--${align} ${className}`.trim()}>
+  <span class="eyebrow__line" aria-hidden="true"></span>
+  <span class="eyebrow__text"><slot /></span>
+</p>
+
+<style>
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-md);
+  }
+  .eyebrow--center {
+    justify-content: center;
+  }
+  .eyebrow__line {
+    width: 32px;
+    height: 2px;
+    background-color: var(--color-secondary);
+    flex-shrink: 0;
+  }
+  .eyebrow--light .eyebrow__text {
+    /* Navy text + orange line: high contrast (WCAG AA) while orange stays
+       the accent. Orange-on-white at this size would fail contrast. */
+    color: var(--color-primary);
+  }
+  .eyebrow--dark .eyebrow__text {
+    color: var(--color-gold);
+  }
+  .eyebrow--dark .eyebrow__line {
+    background-color: var(--color-gold);
+  }
+</style>

@@ -1,0 +1,107 @@
+---
+// -----------------------------------------------------------------------------
+// DifferenceGrid.astro
+// "The Strategy Circle Difference" — four-pillar bordered card grid on a light
+// surface. Each card: icon, sub-label, title, copy.
+// -----------------------------------------------------------------------------
+import { differenceSection, pillars } from '../data/difference';
+import SectionEyebrow from './SectionEyebrow.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="difference section" id="difference">
+  <div class="container">
+    <header class="difference__head" data-reveal>
+      <SectionEyebrow>{differenceSection.eyebrow}</SectionEyebrow>
+      <h2>{differenceSection.heading}</h2>
+    </header>
+
+    <ul class="difference__grid">
+      {pillars.map((pillar, i) => (
+        <li class="pillar" data-reveal style={`--reveal-delay: ${i * 80}ms`}>
+          <span class="pillar__icon" aria-hidden="true">
+            <Icon name={pillar.icon} size={26} />
+          </span>
+          <p class="pillar__sublabel">{pillar.subLabel}</p>
+          <h3 class="pillar__title">{pillar.title}</h3>
+          <p class="pillar__copy">{pillar.copy}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .difference {
+    background-color: var(--surface-muted);
+  }
+  .difference__head {
+    max-width: 40ch;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .difference__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .pillar {
+    background-color: var(--color-white);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out);
+  }
+  .pillar:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-tint-12);
+  }
+
+  .pillar__icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+    background-color: var(--primary-tint-08);
+    margin-bottom: var(--space-lg);
+  }
+  .pillar:hover .pillar__icon {
+    background-color: var(--secondary-tint-10);
+    color: var(--color-secondary);
+  }
+
+  .pillar__sublabel {
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--color-secondary);
+    margin-bottom: var(--space-xs);
+  }
+  .pillar__title {
+    font-size: var(--fs-h3);
+    margin-bottom: var(--space-sm);
+  }
+  .pillar__copy {
+    font-size: var(--fs-small);
+    color: var(--text-body);
+  }
+
+  @media (max-width: 980px) {
+    .difference__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .difference__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

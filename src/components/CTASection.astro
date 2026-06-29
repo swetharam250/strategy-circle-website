@@ -1,0 +1,82 @@
+---
+// -----------------------------------------------------------------------------
+// CTASection.astro
+// Closing CTA on a dark navy background with the subtle grid motif and a
+// gold/orange highlight. Anchored as #contact so CTAs across the page land here.
+// -----------------------------------------------------------------------------
+import { closingCta } from '../data/cta';
+import Button from './Button.astro';
+---
+
+<section class="cta grid-bg" id="contact">
+  <div class="container cta__inner" data-reveal>
+    <span class="cta__ring" aria-hidden="true"></span>
+    <h2 class="cta__headline">{closingCta.headline}</h2>
+    <p class="cta__body">{closingCta.body}</p>
+    <Button href={closingCta.action.href} variant="accent" size="lg" withArrow>
+      {closingCta.action.label}
+    </Button>
+  </div>
+</section>
+
+<style>
+  .cta {
+    background-color: var(--color-dark);
+    color: var(--text-on-dark);
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(4rem, 3rem + 5vw, 7rem);
+  }
+  /* gold wash anchored top-centre */
+  .cta::after {
+    content: '';
+    position: absolute;
+    top: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 640px;
+    height: 640px;
+    background: radial-gradient(circle, var(--gold-tint-14), transparent 62%);
+    pointer-events: none;
+  }
+
+  .cta__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin-inline: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* small concentric ring badge above the headline */
+  .cta__ring {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--white-tint-12);
+    position: relative;
+    margin-bottom: var(--space-lg);
+  }
+  .cta__ring::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    border: 2px solid var(--color-gold);
+  }
+
+  .cta__headline {
+    color: var(--color-white);
+    font-size: var(--fs-h1);
+    margin-bottom: var(--space-md);
+  }
+  .cta__body {
+    color: var(--text-on-dark-muted);
+    font-size: var(--fs-body-lg);
+    margin-bottom: var(--space-xl);
+    max-width: 52ch;
+  }
+</style>
