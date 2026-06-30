@@ -22,9 +22,9 @@ export interface NavLink {
 
 /** Primary header navigation. */
 export const navLinks: NavLink[] = [
-  { label: 'Home', href: '#top' },
-  { label: 'About', href: '#advisor' },
-  { label: 'Services', href: '#services' },
+  { label: 'Home', href: '/#top' },
+  { label: 'About', href: '/#advisor' },
+  { label: 'Services', href: '/#services' },
   { label: 'Resources', href: '/resources' },
 ];
 
@@ -53,19 +53,19 @@ export const site = {
 
 /** Footer link groups. */
 export const footerQuickLinks: NavLink[] = [
-  { label: 'About Swetha', href: '#advisor' },
-  { label: 'Services', href: '#services' },
+  { label: 'About Swetha', href: '/#advisor' },
+  { label: 'Services', href: '/#services' },
   { label: 'Blog', href: '/resources' },
   { label: 'Contact', href: calendlyUrl },
 ];
 
 export const footerServiceLinks: NavLink[] = [
-  { label: 'Fractional CFO Services', href: '#services' },
-  { label: 'Business Structuring & Compliance Setup', href: '#services' },
-  { label: 'Financial & Tax Due Diligence', href: '#services' },
-  { label: 'Contract Financial Risk Management', href: '#services' },
-  { label: 'Investment Readiness Support', href: '#services' },
-  { label: 'DPDP Act 2023 Implementation', href: '#services' },
+  { label: 'Fractional CFO Services', href: '/#services' },
+  { label: 'Business Structuring & Compliance Setup', href: '/#services' },
+  { label: 'Financial & Tax Due Diligence', href: '/#services' },
+  { label: 'Contract Financial Risk Management', href: '/#services' },
+  { label: 'Investment Readiness Support', href: '/#services' },
+  { label: 'DPDP Act 2023 Implementation', href: '/#services' },
 ];
 
 export const legalLinks: NavLink[] = [
