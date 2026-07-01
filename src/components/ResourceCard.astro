@@ -1,130 +1,189 @@
 ---
-// -----------------------------------------------------------------------------
-// ResourceCard.astro
-// Renders a resource entry. LinkedIn / external resources link out in a new
-// tab; others link to a future /resources/[slug] route. Phase-1 placeholders
-// are clearly badged as "Coming soon".
-// -----------------------------------------------------------------------------
-import Icon from './Icon.astro';
-import { resourceTypeLabels, type Resource } from '../data/resources';
-
-export interface Props {
-  resource: Resource;
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  type: string;
+  topic: string;
+  date: Date;
+  image?: string;
 }
-const { resource } = Astro.props;
 
-const isExternal = Boolean(resource.externalUrl);
-const href = resource.comingSoon
-  ? undefined
-  : resource.externalUrl ?? `/resources/${resource.slug}`;
-
-const Tag = href ? 'a' : 'div';
-const dateLabel = new Date(resource.date).toLocaleDateString('en-IN', {
-  year: 'numeric',
+const { title, description, href, type, topic, date, image } = Astro.props;
+const formattedDate = new Intl.DateTimeFormat('en-IN', {
+  day: '2-digit',
   month: 'short',
-});
+  year: 'numeric',
+}).format(date);
 ---
 
-<Tag
-  class={`resource-card${resource.comingSoon ? ' is-placeholder' : ''}`}
-  href={href}
-  target={isExternal ? '_blank' : undefined}
-  rel={isExternal ? 'noopener noreferrer' : undefined}
-  data-type={resource.type}
->
-  <div class="resource-card__meta">
-    <span class="resource-card__type">{resourceTypeLabels[resource.type]}</span>
-    {resource.comingSoon && <span class="resource-card__badge">Coming soon</span>}
-  </div>
+<article class="resource-card" data-type={type.toLowerCase()} data-topic={topic.toLowerCase()}>
+  <a href={href} class="resource-card__image-link" aria-label={`Read ${title}`}>
+    <div class="resource-card__image-wrap">
+      {image ? (
+        <img src={image} alt="" loading="lazy" class="resource-card__image" />
+      ) : (
+        <div class="resource-card__image resource-card__image--fallback"></div>
+      )}
+      <span class="resource-card__type">{type}</span>
+    </div>
+  </a>
 
-  <h3 class="resource-card__title">{resource.title}</h3>
-  <p class="resource-card__excerpt">{resource.excerpt}</p>
+  <div class="resource-card__body">
+    <div class="resource-card__meta">
+      <span>{topic}</span>
+      <span aria-hidden="true">•</span>
+      <time datetime={date.toISOString()}>{formattedDate}</time>
+    </div>
 
-  <div class="resource-card__foot">
-    <span class="resource-card__date">{dateLabel}</span>
-    {!resource.comingSoon && (
-      <span class="resource-card__cue">
-        {isExternal ? 'Read on LinkedIn' : 'Read more'}
-        <Icon name={isExternal ? 'external' : 'arrow-right'} size={16} />
-      </span>
-    )}
+    <h2 class="resource-card__title">
+      <a href={href}>{title}</a>
+    </h2>
+
+    <p class="resource-card__excerpt">{description}</p>
+
+    <a href={href} class="resource-card__cta">
+      Read article
+      <span aria-hidden="true">→</span>
+    </a>
   </div>
-</Tag>
+</article>
 
 <style>
   .resource-card {
-    position: relative;
     display: flex;
     flex-direction: column;
-    background-color: var(--color-white);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: var(--space-xl);
-    height: 100%;
-    transition: transform var(--dur) var(--ease-out),
-      box-shadow var(--dur) var(--ease-out),
-      border-color var(--dur) var(--ease-out);
+    overflow: hidden;
+    border: 1px solid rgba(28, 51, 98, 0.12);
+    border-radius: 1.5rem;
+    background: var(--color-white);
+    box-shadow: 0 1.5rem 3rem rgba(16, 24, 32, 0.08);
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      border-color 180ms ease;
   }
-  a.resource-card:hover {
+
+  .resource-card:hover,
+  .resource-card:focus-within {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--primary-tint-12);
+    border-color: rgba(243, 121, 32, 0.45);
+    box-shadow: 0 2rem 4rem rgba(16, 24, 32, 0.12);
   }
-  .resource-card.is-placeholder {
-    border-style: dashed;
-    background-color: var(--surface-muted);
+
+  .resource-card__image-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .resource-card__image-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-primary);
+  }
+
+  .resource-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 220ms ease;
+  }
+
+  .resource-card:hover .resource-card__image {
+    transform: scale(1.035);
+  }
+
+  .resource-card__image--fallback {
+    background:
+      radial-gradient(circle at 80% 18%, rgba(254, 198, 79, 0.18), transparent 15rem),
+      linear-gradient(135deg, var(--color-primary), var(--color-dark));
+  }
+
+  .resource-card__type {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.85rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--color-primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .resource-card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.35rem;
   }
 
   .resource-card__meta {
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
     align-items: center;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-md);
-  }
-  .resource-card__type {
-    font-size: var(--fs-eyebrow);
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    margin-bottom: 0.7rem;
     color: var(--color-secondary);
-  }
-  .resource-card__badge {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--color-primary);
-    background-color: var(--primary-tint-08);
-    padding: 0.2rem 0.55rem;
-    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .resource-card__title {
-    font-size: var(--fs-h3);
-    margin-bottom: var(--space-sm);
-  }
-  .resource-card__excerpt {
-    font-size: var(--fs-small);
-    color: var(--text-body);
-    margin-bottom: var(--space-lg);
-    flex-grow: 1;
+    margin: 0;
+    color: var(--color-primary);
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+    line-height: 1.18;
+    letter-spacing: -0.03em;
   }
 
-  .resource-card__foot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-md);
+  .resource-card__title a {
+    color: inherit;
+    text-decoration: none;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
-  .resource-card__date {
-    font-size: 0.8rem;
-    color: var(--text-muted);
+
+  .resource-card__title a:hover,
+  .resource-card__title a:focus-visible {
+    color: var(--color-secondary);
   }
-  .resource-card__cue {
+
+  .resource-card__excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    margin: 0.8rem 0 1.25rem;
+    color: var(--text-body);
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  .resource-card__cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    font-size: var(--fs-small);
-    font-weight: 600;
+    gap: 0.4rem;
+    margin-top: auto;
     color: var(--color-primary);
+    font-size: 0.92rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .resource-card__cta:hover,
+  .resource-card__cta:focus-visible {
+    color: var(--color-secondary);
   }
 </style>
