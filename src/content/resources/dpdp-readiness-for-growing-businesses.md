@@ -1,10 +1,9 @@
 ---
 title: "DPDP Readiness for Growing Businesses"
-slug: "dpdp-readiness-for-growing-businesses"
 description: "A practical starting point for businesses preparing for DPDP compliance and stronger data governance."
 date: "2026-06-30"
-type: "Insight"
-topic: "DPDP"
+type: "Guides & Insights"
+topic: "DPDP Implementation"
 author: "Swetha Ranganathan"
 image: "/resources/images/dpdp-readiness.svg"
 featured: true

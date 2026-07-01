@@ -1,10 +1,9 @@
 ---
 title: "What Founders Should Expect During Financial Due Diligence"
-slug: "financial-due-diligence-founders-should-expect"
 description: "A founder-friendly view of what financial due diligence usually examines during investments and acquisitions."
 date: "2026-06-18"
-type: "Article"
-topic: "Due Diligence"
+type: "Blogs & Articles"
+topic: "Financial & Tax Due Diligence"
 author: "Swetha Ranganathan"
 image: "/resources/images/financial-due-diligence.svg"
 featured: false

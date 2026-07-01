@@ -1,9 +1,8 @@
 ---
 title: "Investor Readiness Is More Than a Pitch Deck"
-slug: "investor-readiness-beyond-the-pitch-deck"
 description: "Why financial discipline, data room hygiene, and structural clarity matter before investor conversations."
 date: "2026-06-24"
-type: "Blog"
+type: "Blogs & Articles"
 topic: "Investment Readiness"
 author: "Swetha Ranganathan"
 image: "/resources/images/investor-readiness.svg"
