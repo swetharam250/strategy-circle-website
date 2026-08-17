@@ -10,6 +10,14 @@ interface Props {
 }
 
 const { title, description, href, type, topic, date, image } = Astro.props;
+
+const ctaLabel =
+  type === 'White Papers'
+    ? 'Read white paper'
+    : type === 'Guides & Insights'
+      ? 'Explore guide'
+      : 'Read article';
+
 const formattedDate = new Intl.DateTimeFormat('en-IN', {
   day: '2-digit',
   month: 'short',
@@ -43,7 +51,7 @@ const formattedDate = new Intl.DateTimeFormat('en-IN', {
     <p class="resource-card__excerpt">{description}</p>
 
     <a href={href} class="resource-card__cta">
-      Read article
+      {ctaLabel}
       <span aria-hidden="true">→</span>
     </a>
   </div>

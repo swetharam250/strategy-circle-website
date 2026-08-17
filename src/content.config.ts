@@ -11,6 +11,15 @@ const resources = defineCollection({
     image: z.string().optional(),
     source: z.string().optional(),
     sourceUrl: z.string().url().optional(),
+    format: z.enum([
+      'article',
+      'visual-guide',
+      'web-guide',
+      'long-form-guide',
+      'white-paper',
+    ]).default('article'),
+    asset: z.string().optional(),
+    downloadLabel: z.string().optional(),
     featured: z.boolean().default(false),
   }),
 });

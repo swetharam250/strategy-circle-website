@@ -22,6 +22,12 @@ const formattedDate = new Intl.DateTimeFormat('en-IN', {
 
 const title = `${entry.data.title} | Strategy Circle`;
 const description = entry.data.description;
+
+const isVisualGuide = entry.data.format === 'visual-guide';
+const hasDownload = Boolean(
+  entry.data.asset &&
+  ['web-guide', 'long-form-guide', 'white-paper'].includes(entry.data.format)
+);
 ---
 
 <BaseLayout title={title} description={description}>
@@ -41,7 +47,7 @@ const description = entry.data.description;
         </div>
       </header>
 
-      {entry.data.image && (
+      {entry.data.image && !isVisualGuide && (
         <section class="article-image-section">
           <div class="container">
             <img src={entry.data.image} alt="" class="article-image" />
@@ -52,6 +58,30 @@ const description = entry.data.description;
       <section class="article-content-section">
         <div class="container article-content-grid">
           <div class="article-body">
+
+            {isVisualGuide && entry.data.asset && (
+              <figure class="resource-visual">
+                <img
+                  src={entry.data.asset}
+                  alt={entry.data.title}
+                  loading="eager"
+                />
+              </figure>
+            )}
+
+            {hasDownload && (
+              <div class="resource-download">
+                <a
+                  href={entry.data.asset}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {entry.data.downloadLabel ?? 'View Original Guide'}
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            )}
+
             <Content />
 
             {entry.data.sourceUrl && (
@@ -297,4 +327,39 @@ const description = entry.data.description;
       padding: 3rem 0 4rem;
     }
   }
+
+  .resource-visual {
+    margin: 0 0 2.5rem;
+  }
+
+  .resource-visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid rgba(16, 24, 32, 0.1);
+    border-radius: 1.25rem;
+    box-shadow: 0 1rem 2.5rem rgba(16, 24, 32, 0.08);
+  }
+
+  .resource-download {
+    margin: 0 0 2rem;
+  }
+
+  .resource-download a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.8rem 1.15rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    color: var(--color-primary);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .resource-download a:hover,
+  .resource-download a:focus-visible {
+    opacity: 0.72;
+  }
+
 </style>
