@@ -1,12 +1,12 @@
 ---
-title: "The MBA Call That Started It All: Why the DPDP Act Matters to You"
-description: "A real-world look at how personal data can move beyond its original purpose and why the DPDP Act changes the accountability conversation."
-date: "2026-06-18"
-type: "Blogs & Articles"
-topic: "DPDP Implementation"
-author: "Swetha Ranganathan"
-source: "LinkedIn"
-format: "article"
+title: 'The MBA Call That Started It All: Why the DPDP Act Matters to You'
+description: Temporary GitHub-mode CMS edit test. This will be reverted after validation.
+date: 2026-06-18
+type: Blogs & Articles
+topic: DPDP Implementation
+author: Swetha Ranganathan
+source: LinkedIn
+format: article
 featured: true
 ---
 I applied for an online MBA at ABC University. Pretty straightforward, right?
