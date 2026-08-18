@@ -1,6 +1,8 @@
 ---
 title: 'The MBA Call That Started It All: Why the DPDP Act Matters to You'
-description: Temporary GitHub-mode CMS edit test. This will be reverted after validation.
+description: >-
+  A real-world look at how personal data can move beyond its original purpose
+  and why the DPDP Act changes the accountability conversation.
 date: 2026-06-18
 type: Blogs & Articles
 topic: DPDP Implementation
