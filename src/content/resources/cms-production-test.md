@@ -11,3 +11,6 @@ source: Strategy Circle
 format: article
 featured: false
 ---
+This is a temporary production CMS test.
+
+If this page appears on the live website, the full publishing workflow is working correctly.
