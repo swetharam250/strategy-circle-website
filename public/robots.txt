@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /keystatic
+Disallow: /keystatic/
+Disallow: /api/keystatic
+Disallow: /api/keystatic/
+
+Sitemap: https://www.strategycircle.co.in/sitemap-index.xml

@@ -12,17 +12,34 @@ import { site } from '../data/site';
 export interface Props {
   title?: string;
   description?: string;
-  /** Path for canonical/OG URL, e.g. '/resources'. Defaults to '/'. */
+  /** Optional canonical path. Defaults to the current route. */
   path?: string;
+  image?: string;
+  ogType?: 'website' | 'article';
+  robots?: string;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const {
   title = site.seo.title,
   description = site.seo.description,
-  path = '/',
+  path,
+  image,
+  ogType = 'website',
+  robots = 'index, follow',
+  structuredData,
 } = Astro.props;
 
-const canonical = new URL(path, Astro.site ?? 'https://strategycircle.in').toString();
+const canonicalPath = path ?? Astro.url.pathname;
+const canonical = new URL(
+  canonicalPath,
+  Astro.site ?? 'https://www.strategycircle.co.in'
+).toString();
+
+const socialImage = new URL(
+  image ?? '/strategy-circle-social.png',
+  Astro.site ?? Astro.url.origin
+).toString();
 ---
 
 <!doctype html>
@@ -34,21 +51,32 @@ const canonical = new URL(path, Astro.site ?? 'https://strategycircle.in').toStr
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#1c3362" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <!-- Add an OG image at public/og-image.png and reference it here when ready. -->
+    {socialImage && <meta property="og:image" content={socialImage} />}
+    {socialImage && <meta property="og:image:alt" content={title} />}
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {socialImage && <meta name="twitter:image" content={socialImage} />}
+    {socialImage && <meta name="twitter:image:alt" content={title} />}
+
+    {structuredData && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(structuredData)}
+      />
+    )}
 
     <!-- Favicon placeholder (SVG mark; replace with brand favicon later) -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

@@ -20,8 +20,58 @@ const formattedDate = new Intl.DateTimeFormat('en-IN', {
   year: 'numeric',
 }).format(entry.data.date);
 
-const title = `${entry.data.title} | Strategy Circle`;
+const brandedTitle = `${entry.data.title} | Strategy Circle`;
+const title =
+  brandedTitle.length <= 65
+    ? brandedTitle
+    : entry.data.title;
 const description = entry.data.description;
+const path = `/resources/${entry.id}/`;
+
+const resourceImage =
+  entry.data.image ??
+  (
+    entry.data.format === 'visual-guide' &&
+    entry.data.asset &&
+    /\.(png|jpe?g|webp)$/i.test(entry.data.asset)
+      ? entry.data.asset
+      : undefined
+  );
+
+const absoluteUrl = new URL(
+  path,
+  Astro.site ?? 'https://www.strategycircle.co.in'
+).toString();
+
+const absoluteImage = resourceImage
+  ? new URL(
+      resourceImage,
+      Astro.site ?? 'https://www.strategycircle.co.in'
+    ).toString()
+  : undefined;
+
+const articleStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: entry.data.date.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: entry.data.author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Strategy Circle',
+    url: 'https://www.strategycircle.co.in/',
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': absoluteUrl,
+  },
+  articleSection: entry.data.topic,
+  ...(absoluteImage ? { image: [absoluteImage] } : {}),
+};
 
 const isVisualGuide = entry.data.format === 'visual-guide';
 const hasDownload = Boolean(
@@ -30,7 +80,14 @@ const hasDownload = Boolean(
 );
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  image={resourceImage}
+  ogType="article"
+  structuredData={articleStructuredData}
+>
   <main class="article-page">
     <article>
       <header class="article-hero">

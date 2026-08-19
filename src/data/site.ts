@@ -47,7 +47,7 @@ export const site = {
   seo: {
     title: 'Strategy Circle | Financial Advisory & Compliance Consulting',
     description:
-      'Strategy Circle is a CA-led financial advisory and compliance practice helping startups, scale-ups, and corporate teams build investor-ready, highly compliant, and scalable enterprises.',
+      'CA-led financial advisory and compliance for startups, scale-ups, and corporate teams building investor-ready, compliant, scalable businesses.',
   },
 } as const;
 

@@ -10,9 +10,43 @@ import DifferenceGrid from '../components/DifferenceGrid.astro';
 import ServicesSection from '../components/ServicesSection.astro';
 import AdvisorSection from '../components/AdvisorSection.astro';
 import CTASection from '../components/CTASection.astro';
+
+const organizationStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': 'https://www.strategycircle.co.in/#organization',
+  name: 'Strategy Circle',
+  url: 'https://www.strategycircle.co.in/',
+  description:
+    'Strategy Circle is a boutique financial advisory and compliance practice for startups, scale-ups, corporates, and investors.',
+  founder: {
+    '@type': 'Person',
+    name: 'Swetha Ranganathan',
+    jobTitle: 'Founder & Chartered Accountant',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: 'hello@strategycircle.co.in',
+    telephone: '+91-9585442481',
+    contactType: 'customer service',
+    areaServed: 'IN',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Bengaluru',
+    addressRegion: 'Karnataka',
+    addressCountry: 'IN',
+  },
+  sameAs: [
+    'https://www.linkedin.com/in/swetharanganathan2/',
+  ],
+};
 ---
 
-<BaseLayout path="/">
+<BaseLayout
+  path="/"
+  structuredData={organizationStructuredData}
+>
   <Hero />
   <DifferenceGrid />
   <ServicesSection />
