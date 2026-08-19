@@ -22,20 +22,24 @@ export default config({
         title: fields.slug({
           name: {
             label: 'Title',
+            description: 'The public title of the article or guide.',
           },
         }),
 
         description: fields.text({
-          label: 'Description',
+          label: 'Short Description',
+          description: 'A short 1–2 sentence summary shown on the Resources page.',
           multiline: true,
         }),
 
         date: fields.date({
-          label: 'Published Date',
+          label: 'Publish Date',
+          description: 'The date shown publicly on the resource.',
         }),
 
         type: fields.select({
           label: 'Resource Type',
+          description: 'Choose where this item should appear in the Resources filters.',
           options: [
             {
               label: 'Guides & Insights',
@@ -54,7 +58,8 @@ export default config({
         }),
 
         topic: fields.select({
-          label: 'Topic',
+          label: 'Topic / Service',
+          description: 'Tag the resource to the most relevant Strategy Circle service area.',
           options: [
             {
               label: 'DPDP Implementation',
@@ -88,21 +93,54 @@ export default config({
           defaultValue: 'Tax Advisory',
         }),
 
+        image: fields.image({
+          label: 'Cover Image',
+          description: 'Optional. Upload the image shown on the Resources card and article page.',
+          directory: 'public/resources/images',
+          publicPath: '/resources/images/',
+        }),
+
+        content: fields.markdoc({
+          label: 'Main Content',
+          description: 'Write or paste the full article or guide here.',
+          extension: 'md',
+          options: {
+            formatting: true,
+          },
+        }),
+
+        asset: fields.file({
+          label: 'PDF / Downloadable File',
+          description: 'Optional. Use this when the resource also has a PDF or downloadable guide.',
+          directory: 'public/resources/files',
+          publicPath: '/resources/files/',
+        }),
+
+        featured: fields.checkbox({
+          label: 'Feature this resource',
+          description: 'Turn this on only when this should be highlighted as a featured resource.',
+          defaultValue: false,
+        }),
+
         author: fields.text({
           label: 'Author',
+          description: 'Usually Swetha Ranganathan. Change only when required.',
           defaultValue: 'Swetha Ranganathan',
         }),
 
         source: fields.text({
           label: 'Original Source',
+          description: 'Optional. For migrated content, e.g. LinkedIn or WordPress.',
         }),
 
         sourceUrl: fields.url({
           label: 'Original Source URL',
+          description: 'Optional. Link to the original publication if one exists.',
         }),
 
         format: fields.select({
           label: 'Page Format',
+          description: 'Advanced setting. For a standard new article, leave this as Article.',
           options: [
             { label: 'Article', value: 'article' },
             { label: 'Visual Guide', value: 'visual-guide' },
@@ -113,35 +151,9 @@ export default config({
           defaultValue: 'article',
         }),
 
-        image: fields.image({
-          label: 'Card / Cover Image',
-          description: 'Upload the image shown on the Resources card and article cover.',
-          directory: 'public/resources/images',
-          publicPath: '/resources/images/',
-        }),
-
-        asset: fields.file({
-          label: 'PDF / Downloadable File',
-          description: 'Optional PDF or downloadable resource file.',
-          directory: 'public/resources/files',
-          publicPath: '/resources/files/',
-        }),
-
         downloadLabel: fields.text({
           label: 'Download Button Label',
-        }),
-
-        featured: fields.checkbox({
-          label: 'Featured Resource',
-          defaultValue: false,
-        }),
-
-        content: fields.markdoc({
-          label: 'Article / Guide Content',
-          extension: 'md',
-          options: {
-            formatting: true,
-          },
+          description: 'Advanced / optional. Leave blank unless the downloadable PDF needs a custom button label.',
         }),
       },
     }),
