@@ -69,6 +69,9 @@ import Icon from './Icon.astro';
             {link.label}
           </a>
         ))}
+        <button type="button" class="footer__cookie-settings" data-cookie-settings>
+          Cookie Settings
+        </button>
       </nav>
     </div>
   </div>
@@ -182,6 +185,21 @@ import Icon from './Icon.astro';
     color: var(--color-secondary);
   }
 
+  .footer__cookie-settings {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: var(--white-tint-60);
+    font: inherit;
+    cursor: pointer;
+    transition: color var(--dur) var(--ease-out);
+  }
+
+  .footer__cookie-settings:hover,
+  .footer__cookie-settings:focus-visible {
+    color: var(--color-secondary);
+  }
+
   @media (max-width: 880px) {
     .footer__inner {
       grid-template-columns: 1fr 1fr;
@@ -197,3 +215,13 @@ import Icon from './Icon.astro';
     }
   }
 </style>
+
+<script>
+  document.querySelectorAll('[data-cookie-settings]').forEach((button) => {
+    button.addEventListener('click', () => {
+      document.dispatchEvent(
+        new CustomEvent('strategy-circle:cookie-settings')
+      );
+    });
+  });
+</script>
